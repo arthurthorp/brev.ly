@@ -1,11 +1,11 @@
-import { Typography } from "./components/ui/Typography";
+import { Routes, Route } from "react-router-dom";
+import { Home } from "./pages/Home";
 
 function App() {
   return (
-    <>
-      aaaaa
-      <Typography as="h1">Oi</Typography>
-    </>
+    <Routes>
+      <Route path="/" element={<Home />} />
+    </Routes>
   );
 }
 
