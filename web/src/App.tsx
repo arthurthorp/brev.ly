@@ -1,5 +1,12 @@
+import { Typography } from "./components/ui/Typography";
+
 function App() {
-  return <></>;
+  return (
+    <>
+      aaaaa
+      <Typography as="h1">Oi</Typography>
+    </>
+  );
 }
 
 export default App;
