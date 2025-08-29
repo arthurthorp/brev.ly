@@ -6,7 +6,7 @@ export const links = pgTable("links", {
     .primaryKey()
     .$defaultFn(() => uuidv7()),
   originalUrl: text("original_url").notNull(),
-  shortenedUrl: text("shortened_key").notNull().unique(),
+  shortenedUrl: text("shortened_url").notNull().unique(),
   visitCount: integer("visit_count").notNull().default(0),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
