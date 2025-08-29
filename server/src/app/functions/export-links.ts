@@ -31,7 +31,7 @@ export async function exportLinks(): Promise<Either<never, GetLinksOutput>> {
     columns: [
       { key: "id", header: "ID" },
       { key: "original_url", header: "Original URL" },
-      { key: "shortened_url", header: "Shortened URL" },
+      { key: "shortened_url", header: "Short URL" },
       { key: "visit_count", header: "Access Count" },
       { key: "created_at", header: "Created at" },
     ],

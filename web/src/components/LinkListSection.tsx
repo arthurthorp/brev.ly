@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { LinkItem } from "./LinkItem";
 import { Button } from "./ui/Button";
 import { Card } from "./ui/Card";
@@ -7,8 +7,11 @@ import { DownloadSimpleIcon, LinkIcon } from "@phosphor-icons/react";
 import { env } from "../utils/env";
 import { LoadingIcon } from "./ui/LoadingIcon";
 import { LoadingBar } from "./ui/LoadingBar";
+import { useToast } from "../hooks/useToast";
 
 export function LinkListSection() {
+  const { showToast } = useToast();
+
   const { data, isLoading } = useQuery({
     queryKey: ["links"],
     queryFn: async () => {
@@ -17,6 +20,41 @@ export function LinkListSection() {
       return res.json();
     },
   });
+
+  const downloadCSV = (csvUrl: string) => {
+    const urlParts = csvUrl.split("/");
+    const filename = urlParts[urlParts.length - 1] || "links.csv";
+
+    const link = document.createElement("a");
+    link.href = csvUrl;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const exportMutation = useMutation({
+    mutationFn: async () => {
+      const response = await fetch(`${env.BACKEND_URL}/links/exports`, {
+        method: "POST",
+      });
+
+      if (!response.ok) throw new Error("Erro ao gerar CSV");
+
+      const data = await response.json();
+      return data.reportUrl as string;
+    },
+    onSuccess: (reportUrl) => {
+      downloadCSV(reportUrl);
+    },
+    onError: () => {
+      showToast("Ocorreu um erro ao gerar CSV", "Ocorreu um erro", "error");
+    },
+  });
+
+  const handleExport = () => {
+    exportMutation.mutate();
+  };
 
   return (
     <Card className="flex flex-col max-w-[580px]">
@@ -31,11 +69,22 @@ export function LinkListSection() {
           Meus links
         </Typography>
 
-        <Button className="h-8 flex items-center gap-[6px]" variant="secondary">
-          <DownloadSimpleIcon size={16} />
-          <Typography as="span" variant="sm" weight="semibold">
-            Baixar CSV
-          </Typography>
+        <Button
+          onClick={handleExport}
+          className="h-8 flex items-center gap-[6px]"
+          variant="secondary"
+          disabled={exportMutation.isPending}
+        >
+          {exportMutation.isPending ? (
+            <LoadingIcon size={16} />
+          ) : (
+            <>
+              <DownloadSimpleIcon size={16} />
+              <Typography as="span" variant="sm" weight="semibold">
+                Baixar CSV
+              </Typography>
+            </>
+          )}
         </Button>
       </div>
 
