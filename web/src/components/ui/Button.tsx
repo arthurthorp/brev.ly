@@ -20,13 +20,13 @@ export function Button({
   ...props
 }: ButtonProps) {
   const baseStyles =
-    "inline-flex items-center justify-center rounded-md font-sans font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50";
+    "inline-flex items-center justify-center rounded-md font-sans font-semibold transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50";
 
   const variantStyles: Record<ButtonVariant, string> = {
     primary:
       "bg-blue-base text-white hover:bg-blue-dark disabled:bg-blue-base/50 disabled:text-white/80",
     secondary:
-      "border border-blue-base text-blue-base hover:bg-blue-base hover:text-white disabled:border-gray-300 disabled:text-gray-400 disabled:bg-transparent",
+      "border border-gray-200 bg-gray-200 text-gray-500 hover:border-blue-base disabled:border-gray-200/50 disabled:text-gray-500/200 disabled:bg-gray-200/50",
   };
 
   const sizeStyles: Record<ButtonSize, string> = {

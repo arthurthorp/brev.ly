@@ -1,4 +1,4 @@
-import { fastifyCors } from "@fastify/cors";
+import fastifyCors from "@fastify/cors";
 import { fastify } from "fastify";
 import {
   hasZodFastifySchemaValidationErrors,
@@ -30,7 +30,10 @@ server.setErrorHandler((error, request, reply) => {
   return reply.status(500).send({ message: error.message });
 });
 
-server.register(fastifyCors, { origin: "*" });
+server.register(fastifyCors, {
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+});
 
 server.register(createLinkRoute);
 server.register(getLinksRoute);

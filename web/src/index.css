@@ -17,3 +17,37 @@
 
   --color-danger: #b12c4d;
 }
+
+/* largura da barra */
+.scrollbar::-webkit-scrollbar {
+  @apply w-2 h-2;
+}
+
+/* trilho da barra */
+.scrollbar::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+/* polegar (a parte que se move) */
+.scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-blue-base rounded-full;
+}
+
+/* remove setas */
+.scrollbar::-webkit-scrollbar-button {
+  @apply hidden;
+}
+
+.loading-bar {
+  animation: loadingBar 1s linear infinite;
+  position: absolute;
+}
+
+@keyframes loadingBar {
+  0% {
+    left: -120px;
+  }
+  100% {
+    left: 100%;
+  }
+}

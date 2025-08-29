@@ -1,13 +1,15 @@
-import { cn } from "../../utils/cn";
+import React from "react";
+import { tv } from "tailwind-variants";
 
-export function Card({
-  children,
-  className,
-}: {
+interface CardProps {
   children: React.ReactNode;
   className?: string;
-}) {
-  const baseStyle = "bg-gray-100 w-full rounded-lg p-6 md:p-8";
+}
 
-  return <div className={cn(baseStyle, className)}>{children}</div>;
+const card = tv({
+  base: "bg-gray-100 w-full rounded-lg p-6 md:p-8",
+});
+
+export function Card({ children, className }: CardProps) {
+  return <div className={card({ className })}>{children}</div>;
 }
